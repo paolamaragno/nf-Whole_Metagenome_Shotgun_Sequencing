@@ -1,5 +1,5 @@
 # nf-Whole_Metagenome_Shotgun_Sequencing
-Nextflow pipeline to perform bioinformatic analysis of Whole Metagenome Shotgun Sequencing data.
+Nextflow pipeline to perform bioinformatic analysis of Whole Metagenome Shotgun Sequencing.
 
 This pipeline exploits the BioBakery tools developed for microbial community profiling (https://github.com/biobakery).
 
