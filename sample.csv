@@ -1,3 +1,0 @@
-name,fastq1,fastq2,host_genome_for_mapping
-sample_name1,path/to/sample_name1_R1.fastq,path/to/sample_name1_R2.fastq,genome1
-sample_name2,path/to/sample_name2_R1.fastq,path/to/sample_name2_R2.fastq,genome2
