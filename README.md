@@ -27,7 +27,7 @@ sample_name1,path/to/sample_name1_R1.fastq,path/to/sample_name1_R2.fastq,genome1
 sample_name2,path/to/sample_name2_R1.fastq,path/to/sample_name2_R2.fastq,genome2
 ```
 
-The last column, host_genome_for_mapping, is used to specify the genome of the host organism (e.g. human, mouse). If all the samples come from the same host, the host genome will be always genome1 and so all the samples will be mapped (during BOWTIE2_SAMTOOLS_ONE_INDEX process) against the same host genome to remove contaminations. If some somples come from a different host, the host genome for these samples will be genome2 and so the samples will be mapped (during BOWTIE2_SAMTOOLS_TWO_INDEX) against the right host genome (genome1 or genome2) to remove contaminations.
+The last column, host_genome_for_mapping, is used to specify the genome of the host organism (e.g. human, mouse). If all the samples come from the same host, the host genome will be always genome1 and so all the samples will be mapped (during BOWTIE2_SAMTOOLS_ONE_INDEX process) against the same host genome to remove contaminations. If some samples come from a different host, the host genome for these samples will be genome2 and so the samples will be mapped (during BOWTIE2_SAMTOOLS_TWO_INDEX) against the right host genome (genome1 or genome2) to remove contaminations.
 
 All the parameters must be specified in the nextflow.conf configuration file. Then, you can run the pipeline with the following command:
 ```
