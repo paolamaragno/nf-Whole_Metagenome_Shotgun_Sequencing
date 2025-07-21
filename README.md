@@ -18,7 +18,7 @@ First, it is advised to perform a quality check on your fastq files running
 fastqc *fastq.gz -o ./fastqc_result
 mutiqc ./fastqc_result
 ```
-Particularly, check the Sequence Length Distribution in order to set the correct minimum read length paramenter for Trimmomatic and Metaphlan.
+Particularly, check the Sequence Length Distribution to set the correct minimum read length paramenter for Trimmomatic and Metaphlan.
 
 Preparare the sample.csv file with the following structure:
 ```
