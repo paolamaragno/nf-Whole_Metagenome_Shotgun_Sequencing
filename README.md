@@ -5,6 +5,7 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 
 # Getting started
 * [Nextflow](https://nf-co.re/docs/usage/installation)
+* [Docker](https://www.docker.com/)
 * [Singularity](https://docs.sylabs.io/guides/3.0/user-guide/installation.html)
 * [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
 
