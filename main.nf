@@ -18,6 +18,7 @@ include { REMOVE_HOST_READS } from './modules/remove_host_reads'
 include { METAPHLAN_INSTALL } from './modules/metaphlan/metaphlan4_db_install'
 include { METAPHLAN4 } from './modules/metaphlan/metaphlan4'
 include { METAPHLAN4_MERGE_PROFILES } from './modules/metaphlan/metaphlan4_merge_profiles'
+include { HUMANN_INSTALL_UTILITY_MAPPING } from './modules/humann/humann3_install_utility_mapping'
 include { HUMANN_INSTALL_DB_NUCLEOTIDES } from './modules/humann/humann3_install_db_nucleotides'
 include { HUMANN_INSTALL_DB_PROTEINS } from './modules/humann/humann3_install_db_proteins'
 include { HUMANN3 } from './modules/humann/humann3'
@@ -106,8 +107,18 @@ workflow {
 
 	ch_versions = ch_versions.mix(METAPHLAN4_MERGE_PROFILES.out.versions)
 
-	HUMANN3(METAPHLAN4.out.processed_fastq,METAPHLAN4.out.profile, ch_humann_nucleo, ch_humann_proteins)
+	if (params.run_mode == 'conda') {
 
+		humann_utility_mapping = HUMANN_INSTALL_UTILITY_MAPPING().humann_utility_mapping
+		
+		ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
+ 
+		HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, humann_utility_mapping, ch_humann_nucleo, ch_humann_proteins)       
+	} else {
+	
+		HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, ch_humann_nucleo, ch_humann_proteins)
+	}
+	
 	ch_versions = ch_versions.mix(HUMANN3.out.versions)
 
 	HUMANN3_POST_PROCESSING(HUMANN3.out.genefamilies_KO_not_renamed.collect(), HUMANN3.out.genefamilies_KO_renamed.collect(), HUMANN3.out.pathabundance.collect())
