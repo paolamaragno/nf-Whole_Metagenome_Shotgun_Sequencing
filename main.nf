@@ -74,7 +74,6 @@ workflow {
 
         }
 
-
 	if (params.genome_index) {
 
 		COPY_GENOME_INDEX(params.genome_index)
@@ -113,7 +112,8 @@ workflow {
 		
 		ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
  
-		HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, humann_utility_mapping, ch_humann_nucleo, ch_humann_proteins)       
+		HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, humann_utility_mapping, ch_humann_nucleo, ch_humann_proteins)  
+
 	} else {
 	
 		HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, ch_humann_nucleo, ch_humann_proteins)
@@ -148,5 +148,5 @@ log.info """
     Total execution time: ${workflow.duration}
     ====================================================
 """.stripIndent()
-}
+	}
 }
