@@ -14,7 +14,7 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 <img width="5604" height="3380" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/493d2718-9a75-4abd-8c41-360a88db0586" />
 
 # Usage
-First, it is advised to perform a quality check on your fastq files running 
+First, it is advised to perform a quality check on your fastq files running:
 ```
 fastqc *fastq.gz -o ./fastqc_result
 multiqc ./fastqc_result
