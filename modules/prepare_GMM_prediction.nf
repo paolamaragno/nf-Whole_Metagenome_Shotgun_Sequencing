@@ -7,11 +7,9 @@ process PREPARE_GMM_PREDICTION {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'conda-forge::r-readr'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'nf-core/bioconductor-edger_bioconductor-ihw_bioconductor-limma_r-dplyr_r-readr:edea0f9fbaeba3a0'
-        }
+    }
 
 	input:
 	path(all_genefamilies_KO_not_renamed)
