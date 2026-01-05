@@ -5,11 +5,9 @@ process COLLECT_VERSIONS {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::multiqc=1.23'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'biocontainers/multiqc:1.30--pyhdfd78af_0'
-        }
+    }
 	
 	input:
 	path versions
