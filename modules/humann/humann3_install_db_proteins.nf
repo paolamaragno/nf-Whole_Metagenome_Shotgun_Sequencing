@@ -7,11 +7,9 @@ process HUMANN_INSTALL_DB_PROTEINS {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'biobakery::humann=3.9'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'biocontainers/humann:3.9--py312hdfd78af_0'
-        }
+    }
 
 	publishDir = [
 		path: { "${params.outdir}/references" },
