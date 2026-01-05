@@ -14,11 +14,9 @@ process HUMANN3_POST_PROCESSING {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'biobakery::humann=3.9 metaphlan=4.1.1 python=3.7'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'biocontainers/humann:3.9--py312hdfd78af_0'
-        }
+    }
 
 	input:
 	path(genefamilies_KO_not_renamed)
