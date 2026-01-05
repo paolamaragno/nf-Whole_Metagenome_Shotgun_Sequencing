@@ -3,15 +3,13 @@
 process METAPHLAN_INSTALL {
 
 	cpus = { 2 + (1 * (task.attempt-1)) }
-        memory = { 2.GB + (2.GB * (task.attempt-1)) }
+    memory = { 2.GB + (2.GB * (task.attempt-1)) }
 
 	if( params.run_mode == 'conda' ) {
 		conda 'metaphlan=4.1.1'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'biocontainers/metaphlan:4.1.1--pyhdfd78af_0'
-        }
+    }
 
 	publishDir = [
 		path: { "${params.outdir}/references" },
