@@ -10,11 +10,9 @@ process MULTIQC {
 	
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::multiqc==1.23 python=3.10'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'biocontainers/multiqc:1.23--pyhdfd78af_0'
-        }
+    }
 
 	input:
 	path software_versions
