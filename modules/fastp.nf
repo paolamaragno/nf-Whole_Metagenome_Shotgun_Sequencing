@@ -15,11 +15,9 @@ process FASTP {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::fastp=1.0.1'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'biocontainers/fastp:1.0.1--heae3180_0'
-        }
+    }
 
 	input:
 	tuple val(name), path(fastq1), path(fastq2)
