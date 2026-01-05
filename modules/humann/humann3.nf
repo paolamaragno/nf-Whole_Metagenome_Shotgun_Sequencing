@@ -9,11 +9,9 @@ process HUMANN3 {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'biobakery::humann=3.9 metaphlan=4.1.1 python=3.7'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'pmaragno/humann_3.9_updated:latest'
-        }
+    }
 
 	input:
 	tuple val(sample_id), path(processed_fastq)
