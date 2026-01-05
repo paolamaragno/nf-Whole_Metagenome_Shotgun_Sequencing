@@ -15,11 +15,9 @@ process REMOVE_HOST_READS {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bowtie2=2.5.4 samtools=1.22.1'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'pmaragno/bowtie2.5.4_samtools1.22.1_cluster'
-        }
+    }
 
 	input:
 	path(bowtie2_idx_folder)
