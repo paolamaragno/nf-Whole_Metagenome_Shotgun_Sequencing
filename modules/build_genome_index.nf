@@ -15,11 +15,9 @@ process BUILD_GENOME_INDEX {
 
 	if( params.run_mode == 'conda' ) {
                 conda 'bowtie2=2.5.4'
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
                 container 'biocontainers/bowtie2:2.5.4--he96a11b_6'
-        }
+    }
 
 	input:
 	path(genome_fasta)
