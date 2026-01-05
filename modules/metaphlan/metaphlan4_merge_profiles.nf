@@ -14,11 +14,9 @@ process METAPHLAN4_MERGE_PROFILES {
 
 	if( params.run_mode == 'conda' ) {
 		conda "metaphlan=4.1.1"
-        }
-
-        if( params.run_mode == 'container' ) {
+    } else {
 		container 'biocontainers/metaphlan:4.1.1--pyhdfd78af_0'
-        }
+    }
 
 	input:
 	path(profile)
