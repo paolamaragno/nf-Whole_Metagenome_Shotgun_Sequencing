@@ -12,9 +12,7 @@ process GMM_PREDICTION {
 
 	if( params.run_mode == 'conda' ) {
 		conda 'conda-forge::openjdk=23.0.2'
-	}
-
-	if( params.run_mode == 'container' ) {
+	} else {
 		container 'pmaragno/openjdk_23.0.2:latest'
 	}
 
