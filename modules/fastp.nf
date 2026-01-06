@@ -3,7 +3,7 @@
 process FASTP {
 
 	cpus = { 3 + (1 * (task.attempt-1)) }
-	memory = { 4.GB + (2.GB * (task.attempt-1))}
+	memory = { 12.GB + (2.GB * (task.attempt-1))}
 
 	tag "Fastp on $name"
 	publishDir = [
