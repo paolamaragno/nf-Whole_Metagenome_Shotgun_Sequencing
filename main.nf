@@ -110,7 +110,7 @@ workflow {
 
 	if (params.run_mode == 'conda') {
 
-		humann_utility_mapping = HUMANN_INSTALL_UTILITY_MAPPING.out.humann_utility_mapping
+		humann_utility_mapping = HUMANN_INSTALL_UTILITY_MAPPING().humann_utility_mapping
 		
 		ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
  
