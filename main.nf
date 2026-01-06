@@ -106,18 +106,17 @@ workflow {
 
 	ch_versions = ch_versions.mix(METAPHLAN4_MERGE_PROFILES.out.versions)
 
+	humann_utility_mapping = Channel.empty()
+
 	if (params.run_mode == 'conda') {
 
 		humann_utility_mapping = HUMANN_INSTALL_UTILITY_MAPPING.out.humann_utility_mapping
 		
 		ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
  
-		HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, humann_utility_mapping, ch_humann_nucleo, ch_humann_proteins)  
-
-	} else {
+	} 
 	
-		HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, ch_humann_nucleo, ch_humann_proteins)
-	}
+	HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, humann_utility_mapping, ch_humann_nucleo, ch_humann_proteins)  
 	
 	ch_versions = ch_versions.mix(HUMANN3.out.versions)
 
