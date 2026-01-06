@@ -16,9 +16,7 @@ process HUMANN3 {
 	input:
 	tuple val(sample_id), path(processed_fastq)
 	path(profile)
-	if( params.run_mode == 'conda' ) {
-		path(humann_utility_mapping)
-	}
+	path(humann_utility_mapping)
 	path(humann_db_nucleo)
 	path(humann_db_proteins)
 
