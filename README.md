@@ -11,7 +11,7 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 * [Apptainer](https://apptainer.org/)
 
 # Overview
-<img width="5604" height="3380" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/493d2718-9a75-4abd-8c41-360a88db0586" />
+<img width="5604" height="3376" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/c7e3599c-6589-44f9-8bab-3f098ed19ea5" />
 
 # Usage
 First, it is advised to perform a quality check on your fastq files running:
@@ -64,6 +64,7 @@ The following are parameters that the user is not advised to change:
 1. [fastp](https://github.com/OpenGene/fastp) for quality control and adapter trimming 
 1. [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) and [Samtools](https://www.htslib.org/) for alignment to the reference genome of the host and removal of contaminations
 1. Merge forward and reverse fastq files using **cat**
+1. [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [multiqc](https://github.com/MultiQC/MultiQC) for quality control of filtered reads
 1. [Metaphlan](https://github.com/biobakery/MetaPhlAn)
    1. Taxonomic profiling at sample level
    1. **merge_metaphlan_tables.py** to merge profiles from all the samples in a single file
