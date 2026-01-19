@@ -22,6 +22,7 @@ process METAPHLAN4 {
 	input:
 	tuple val(sample_id), path(processed_fastq)
 	path(metaphlan_db)
+	val(length)
 
 	output:
 	tuple val(sample_id), path("${processed_fastq}"), emit: processed_fastq
@@ -30,7 +31,7 @@ process METAPHLAN4 {
 
 	script:
 	"""
-	metaphlan ${processed_fastq} --input_type fastq  --bowtie2db ${metaphlan_db}  --bowtie2out ${sample_id}.bowtie2.bz2 --samout ${sample_id}.sam.bz2 -o ${sample_id}_profile.txt --nproc ${task.cpus} --read_min_len ${params.metaphlan_read_min_len} -x mpa_vJun23_CHOCOPhlAnSGB_202403
+	metaphlan ${processed_fastq} --input_type fastq  --bowtie2db ${metaphlan_db}  --bowtie2out ${sample_id}.bowtie2.bz2 --samout ${sample_id}.sam.bz2 -o ${sample_id}_profile.txt --nproc ${task.cpus} --read_min_len ${length} -x mpa_vJun23_CHOCOPhlAnSGB_202403
 
 	cat <<-END_VERSIONS > versions_metaphlan.yml
         "${task.process}":
