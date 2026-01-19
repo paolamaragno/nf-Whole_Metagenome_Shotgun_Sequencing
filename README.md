@@ -11,7 +11,7 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 * [Apptainer](https://apptainer.org/)
 
 # Overview
-<img width="5604" height="3376" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/c7e3599c-6589-44f9-8bab-3f098ed19ea5" />
+<img width="16384" height="9988" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/a093f3b8-dc3b-4033-ab65-68b56af0deeb" />
 
 # Usage
 First, it is advised to perform a quality check on your fastq files running:
