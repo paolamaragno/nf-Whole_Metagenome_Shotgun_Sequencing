@@ -14,13 +14,6 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 <img width="16384" height="9988" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/a093f3b8-dc3b-4033-ab65-68b56af0deeb" />
 
 # Usage
-First, it is advised to perform a quality check on your fastq files running:
-```
-fastqc *fastq.gz -o ./fastqc_result
-multiqc ./fastqc_result
-```
-Particularly, check the Sequence Length Distribution to set the correct minimum read length paramenter for Fastp and Metaphlan.
-
 Preparare the sample.csv file with the following structure:
 ```
 name,fastq1,fastq2
@@ -61,6 +54,7 @@ The following are parameters that the user is not advised to change:
 ```
 
 # Workflow description
+1. [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [multiqc](https://github.com/MultiQC/MultiQC) for quality control of raw reads
 1. [fastp](https://github.com/OpenGene/fastp) for quality control and adapter trimming 
 1. [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) and [Samtools](https://www.htslib.org/) for alignment to the reference genome of the host and removal of contaminations
 1. Merge forward and reverse fastq files using **cat**
