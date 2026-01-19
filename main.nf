@@ -11,10 +11,15 @@ log.info """\
     """
     .stripIndent()
 
+include { FASTQC_RAW_READS } from './modules/fastqc_raw_reads'
+include { MULTIQC_RAW_READS } from './modules/multiqc_raw_reads'
+include { GET_GLOBAL_MIN_LENGTH } from './modules/get_global_min_length'
 include { FASTP } from './modules/fastp'
 include { BUILD_GENOME_INDEX } from './modules/build_genome_index'
 include { COPY_GENOME_INDEX } from './modules/copy_genome_index'
 include { REMOVE_HOST_READS } from './modules/remove_host_reads'
+include { FASTQC_FILTERED_READS } from './modules/fastqc_filtered_reads'
+include { MULTIQC_FILTERED_READS } from './modules/multiqc_filtered_reads'
 include { METAPHLAN_INSTALL } from './modules/metaphlan/metaphlan4_db_install'
 include { METAPHLAN4 } from './modules/metaphlan/metaphlan4'
 include { METAPHLAN4_MERGE_PROFILES } from './modules/metaphlan/metaphlan4_merge_profiles'
@@ -26,7 +31,7 @@ include { HUMANN3_POST_PROCESSING } from './modules/humann/humann3_post_processi
 include { PREPARE_GMM_PREDICTION } from './modules/prepare_GMM_prediction'
 include { GMM_PREDICTION } from './modules/GMM_prediction'
 include { COLLECT_VERSIONS } from './modules/versions'
-include { MULTIQC } from './modules/multiqc'
+include { MULTIQC_FINAL } from './modules/multiqc_final'
 
 workflow {
 
@@ -36,8 +41,18 @@ workflow {
 			.fromPath(params.input_reads, followLinks: true)
 			.splitCsv(header: true)
 			.map { row -> tuple(row.name, file(row.fastq1), file(row.fastq2)) }
+	
+	FASTQC_RAW_READS(reads)
 
-	FASTP(reads)
+        ch_versions = ch_versions.mix(FASTQC_RAW_READS.out.versions)
+
+        MULTIQC_RAW_READS(FASTQC_RAW_READS.out.fastqc_raw_out.collect())
+
+        ch_versions = ch_versions.mix(MULTIQC_RAW_READS.out.versions)
+
+	min_length_ch = GET_GLOBAL_MIN_LENGTH(MULTIQC_RAW_READS.out.data_dir)
+
+	FASTP(reads, min_length_ch)
 
 	ch_versions = ch_versions.mix(FASTP.out.versions)
 
@@ -98,7 +113,15 @@ workflow {
 
 	ch_versions = ch_versions.mix(REMOVE_HOST_READS.out.versions)
 
-	METAPHLAN4(REMOVE_HOST_READS.out.processed_reads, ch_metaphlan_db)
+	FASTQC_FILTERED_READS(REMOVE_HOST_READS.out.processed_reads)
+
+	ch_versions = ch_versions.mix(FASTQC_FILTERED_READS.out.versions)
+
+	MULTIQC_FILTERED_READS(FASTQC_FILTERED_READS.out.fastqc_filtered_out.collect())
+
+	ch_versions = ch_versions.mix(MULTIQC_FILTERED_READS.out.versions)
+
+	METAPHLAN4(REMOVE_HOST_READS.out.processed_reads, ch_metaphlan_db, min_length_ch)
 
 	ch_versions = ch_versions.mix(METAPHLAN4.out.versions)
 
@@ -106,17 +129,17 @@ workflow {
 
 	ch_versions = ch_versions.mix(METAPHLAN4_MERGE_PROFILES.out.versions)
 
-	humann_utility_mapping = Channel.empty()
+	humann_utility_mapping_ch  = Channel.value([])
 
 	if (params.run_mode == 'conda') {
 
-		humann_utility_mapping = HUMANN_INSTALL_UTILITY_MAPPING().humann_utility_mapping
+		humann_utility_mapping_ch = HUMANN_INSTALL_UTILITY_MAPPING().humann_utility_mapping
 		
 		ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
  
 	} 
 	
-	HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, humann_utility_mapping, ch_humann_nucleo, ch_humann_proteins)  
+	HUMANN3(METAPHLAN4.out.processed_fastq, METAPHLAN4.out.profile, humann_utility_mapping_ch, ch_humann_nucleo, ch_humann_proteins)  
 	
 	ch_versions = ch_versions.mix(HUMANN3.out.versions)
 
@@ -134,7 +157,7 @@ workflow {
 
 	COLLECT_VERSIONS(ch_versions.unique().collectFile(name: 'collated_versions.yml'))
 
-	MULTIQC(COLLECT_VERSIONS.out.mqc_yml.collect())
+	MULTIQC_FINAL(COLLECT_VERSIONS.out.mqc_yml.collect())
 
 }
 
