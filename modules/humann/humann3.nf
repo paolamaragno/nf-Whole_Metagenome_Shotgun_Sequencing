@@ -30,36 +30,36 @@ process HUMANN3 {
 
 	script:
         if (params.run_mode == 'conda') {
-                """
+	        """
                 humann_config --update database_folders utility_mapping ${humann_utility_mapping}
 
-				humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234"  
+		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234"  
 
-				humann_regroup_table -i ${sample_id}_filtered.final_R1_R2_genefamilies.tsv -o ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --groups ${params.regroup_option}
-				humann_rename_table --input ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --output ${sample_id}_filtered.final_R1_R2_genefamilies_KO_renamed.tsv --names ${params.rename_option}
+		humann_regroup_table -i ${sample_id}_filtered.final_R1_R2_genefamilies.tsv -o ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --groups ${params.regroup_option}
+		humann_rename_table --input ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --output ${sample_id}_filtered.final_R1_R2_genefamilies_KO_renamed.tsv --names ${params.rename_option}
 
-				cat <<-END_VERSIONS > versions_humann.yml
-	            "${task.process}":
-	                humann: \$(echo \$(humann --version | sed 's/^.*humann //; s/Using.*\$//'))
-	                methaphlan: \$(echo \$(metaphlan --version | sed 's/^.*MetaPhlAn version //; s/Using.*\$//'))
-	                diamond: \$(echo \$(diamond --version | sed 's/^.*diamond version //; s/Using.*\$//'))
-	                bowtie2: \$(echo \$(bowtie2-build --version | head -n1 | sed 's/^.*bowtie2-build-s version //'))
-				END_VERSIONS
+		cat <<-END_VERSIONS > versions_humann.yml
+	        "${task.process}":
+	            humann: \$(echo \$(humann --version | sed 's/^.*humann //; s/Using.*\$//'))
+	            methaphlan: \$(echo \$(metaphlan --version | sed 's/^.*MetaPhlAn version //; s/Using.*\$//'))
+	            diamond: \$(echo \$(diamond --version | sed 's/^.*diamond version //; s/Using.*\$//'))
+	            bowtie2: \$(echo \$(bowtie2-build --version | head -n1 | sed 's/^.*bowtie2-build-s version //'))
+		END_VERSIONS
                 """
         } else {
                 """
-				humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234"  
-		
-				humann_regroup_table -i ${sample_id}_filtered.final_R1_R2_genefamilies.tsv -o ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --groups ${params.regroup_option}
-				humann_rename_table --input ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --output ${sample_id}_filtered.final_R1_R2_genefamilies_KO_renamed.tsv --names ${params.rename_option}
+		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234"  
 
-				cat <<-END_VERSIONS > versions_humann.yml
-	            "${task.process}":
-	                humann: \$(echo \$(humann --version | sed 's/^.*humann //; s/Using.*\$//'))
-	                methaphlan: \$(echo \$(metaphlan --version | sed 's/^.*MetaPhlAn version //; s/Using.*\$//'))
-	                diamond: \$(echo \$(diamond --version | sed 's/^.*diamond version //; s/Using.*\$//'))
-	                bowtie2: \$(echo \$(bowtie2-build --version | head -n1 | sed 's/^.*bowtie2-build-s version //'))
-				END_VERSIONS
-				"""
+		humann_regroup_table -i ${sample_id}_filtered.final_R1_R2_genefamilies.tsv -o ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --groups ${params.regroup_option}
+		humann_rename_table --input ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --output ${sample_id}_filtered.final_R1_R2_genefamilies_KO_renamed.tsv --names ${params.rename_option}
+
+		cat <<-END_VERSIONS > versions_humann.yml
+	        "${task.process}":
+	           humann: \$(echo \$(humann --version | sed 's/^.*humann //; s/Using.*\$//'))
+	           methaphlan: \$(echo \$(metaphlan --version | sed 's/^.*MetaPhlAn version //; s/Using.*\$//'))
+	           diamond: \$(echo \$(diamond --version | sed 's/^.*diamond version //; s/Using.*\$//'))
+	           bowtie2: \$(echo \$(bowtie2-build --version | head -n1 | sed 's/^.*bowtie2-build-s version //'))
+		END_VERSIONS
+		"""
         }
 }
