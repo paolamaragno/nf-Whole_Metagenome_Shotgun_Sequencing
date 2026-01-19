@@ -21,6 +21,7 @@ process FASTP {
 
 	input:
 	tuple val(name), path(fastq1), path(fastq2)
+	val(length)
 
 	output:
 	tuple val(name), file("${name}_R1_001_filtered.fastq"), file("${name}_R2_001_filtered.fastq"), emit: fastp_reads
@@ -35,7 +36,7 @@ process FASTP {
                 --out1 ${name}_R1_001_filtered.fastq \
                 --out2 ${name}_R2_001_filtered.fastq \
 		--html ${name}_fastp.html \
-                --cut_front --cut_tail --cut_mean_quality 20 --qualified_quality_phred 15 --cut_window_size 4 --length_required ${params.fastp_MINLEN} \
+                --cut_front --cut_tail --cut_mean_quality 20 --qualified_quality_phred 15 --cut_window_size 4 --length_required ${length} \
                 --detect_adapter_for_pe --disable_trim_poly_g --thread ${task.cpus}
 
 	cat <<-END_VERSIONS > versions_fastp.yml
