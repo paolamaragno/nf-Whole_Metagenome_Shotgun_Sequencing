@@ -16,7 +16,7 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 # Usage
 Preparare the sample.csv file with the following structure:
 ```
-name,fastq1,fastq2
+sample,fastq1,fastq2
 sample_name1,path/to/sample_name1_R1.fastq,path/to/sample_name1_R2.fastq
 sample_name2,path/to/sample_name2_R1.fastq,path/to/sample_name2_R2.fastq
 ```
@@ -36,21 +36,14 @@ The following parameters must be specified in nextflow.config file or directly i
 --genome_fasta                                           Path to the genome fasta file
 --genome_index                                           Path to the folder containing the index of the genome (default: false, in this case the indexing of the genome will be done by the pipeline)
 --idx_genome                                             Name to use for the the index of the genome
---fastp_MINLEN                                           Minimum required read length
 --metaphlan_db                                           Path to the folder containing Metaphlan database (default: false, in this case the database will be downloaded by the pipeline)
 --metaphlan_db_index                                     Desired version for metaphlan database
---metaphlan_read_min_len                                 Minimum read length expected by metaphlan (should be the same value of fastp_MINLEN parameter)
 --humann_nucleotide_db                                   Path to the folder containing Humann nucleotide database (default: false, in this case the database will be downloaded by the pipeline)
 --humann_protein_db                                      Path to the folder containing Humann protein database (default: false, in this case the database will be downloaded by the pipeline)
 --gene_families_db                                       Specification of the version of Uniref database for gene family definitions (default: "uniref90")
 --regroup_option                                         Specification of the functional category in which regrouping gene families (default: "uniref90_ko")
 --rename_option                                          Specification of the feature type in which rename gene families (default: "kegg-orthology")
 --save_reference                                         Choose whether saving or not the downloaded reference databases (default: true)
-
-The following are parameters that the user is not advised to change:
---R_prepare_GMM_prediction                               Path to the R file that prepares the input for omixer
---omixer_jar                                             Path to omixer excecutable   
---GMM_db                                                 Path to the GMMs jar file for inferring modules
 ```
 
 # Workflow description
@@ -67,5 +60,4 @@ The following are parameters that the user is not advised to change:
     1. **humann_regoup_table** to group Uniref90 terms in KO ids
     1. **humann_rename_table** to rename KO ids in human-readable descriptions
     1. **humann_join_tables** to merge profiles from all the samples in a single file
-1. [omixer](https://github.com/raeslab/omixer-rpm) for the prediction of Gut Metabolic Modules (GMM)
 1. [multiqc](https://github.com/MultiQC/MultiQC) to print a html report reporting the version of all the softwares used during the pipeline. 
