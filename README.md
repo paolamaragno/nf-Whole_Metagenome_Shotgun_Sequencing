@@ -14,36 +14,50 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 <img width="16384" height="9988" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/a093f3b8-dc3b-4033-ab65-68b56af0deeb" />
 
 # Usage
+First, clone the repository:
+```
+git clone https://github.com/paolamaragno/nf-Whole_Metagenome_Shotgun_Sequencing.git
+```
+Run the following command in the cloned folder to see the options for the pipeline:
+```
+nextflow run main.nf --help
+
+    WHOLE METAGENOME SHOTGUN SEQUENCING ANALYSIS
+    The pipeline is designed for the analysis of Whole Metagenome Shotgun data from Illumina sequencing 
+
+    For samples CSV, three columns named "sample", "fastq1" and "fastq2" are required. 
+
+    All the parameters must be specified in the nextflow.config configuration file. Then, you can run the pipeline with the following command:
+
+    nextflow run main.nf -c nextflow.config -profile <desired profile> --input samples.csv 
+
+    Command line arguments:
+    
+    -profile			Configuration profile to use. Available: docker, singularity, apptainer, conda
+    -bg				To run the pipeline in background
+    -resume			To resume the previous execution of the pipeline
+
+    The following parameters must be specified in nextflow.config file or directly in nextflow command line (in this second case the value specified in nextflow.config will be overwritten):
+    --input_reads		Path to the comma-separated sample file
+    --outdir			Path to a folder where to store results 
+    --genome_fasta		Path to the genome fasta file 
+    --genome_index		Path to the folder containing the index of the genome (default: false, in this case the indexing of the genome will be done by the pipeline)
+    --idx_genome		Name to use for the the index of the genome
+    --metaphlan_db		Path to the folder containing Metaphlan database (default: false, in this case the database will be downloaded by the pipeline)
+    --metaphlan_db_index	Desired version for metaphlan database 
+    --humann_nucleotide_db	Path to the folder containing Humann nucleotide database (default: false, in this case the database will be downloaded by the pipeline)
+    --humann_protein_db		Path to the folder containing Humann protein database (default: false, in this case the database will be downloaded by the pipeline)
+    --gene_families_db		Specification of the version of Uniref database for gene family definitions (default: "uniref90")
+    --regroup_option		Specification of the functional category in which regrouping gene families (default: "uniref90_ko")
+    --rename_option		Specification of the feature type in which rename gene families (default: "kegg-orthology")
+    --save_reference		Choose whether saving or not the downloaded reference databases (default: true)
+```
+
 Preparare the sample.csv file with the following structure:
 ```
 sample,fastq1,fastq2
 sample_name1,path/to/sample_name1_R1.fastq,path/to/sample_name1_R2.fastq
 sample_name2,path/to/sample_name2_R1.fastq,path/to/sample_name2_R2.fastq
-```
-
-All the parameters must be specified in the nextflow.config configuration file. Then, you can run the pipeline with the following command:
-```
-nextflow run main.nf -c nextflow.config -profile <desired profile> 
-
-Command line arguments:
--profile                                                 Configuration profile to use. Available: docker, singularity, apptainer, conda
--bg                                                      To run the pipeline in background
--resume                                                  To resume the previous execution of the pipeline
-
-The following parameters must be specified in nextflow.config file or directly in nextflow command line (in this second case the value specified in nextflow.config will be overwritten):
---input_reads                                            Path to the comma-separated sample file
---outdir                                                 Path to a folder where to store results
---genome_fasta                                           Path to the genome fasta file
---genome_index                                           Path to the folder containing the index of the genome (default: false, in this case the indexing of the genome will be done by the pipeline)
---idx_genome                                             Name to use for the the index of the genome
---metaphlan_db                                           Path to the folder containing Metaphlan database (default: false, in this case the database will be downloaded by the pipeline)
---metaphlan_db_index                                     Desired version for metaphlan database
---humann_nucleotide_db                                   Path to the folder containing Humann nucleotide database (default: false, in this case the database will be downloaded by the pipeline)
---humann_protein_db                                      Path to the folder containing Humann protein database (default: false, in this case the database will be downloaded by the pipeline)
---gene_families_db                                       Specification of the version of Uniref database for gene family definitions (default: "uniref90")
---regroup_option                                         Specification of the functional category in which regrouping gene families (default: "uniref90_ko")
---rename_option                                          Specification of the feature type in which rename gene families (default: "kegg-orthology")
---save_reference                                         Choose whether saving or not the downloaded reference databases (default: true)
 ```
 
 # Workflow description
