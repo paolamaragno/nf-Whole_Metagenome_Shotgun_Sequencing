@@ -25,7 +25,8 @@ nextflow run main.nf --help
     WHOLE METAGENOME SHOTGUN SEQUENCING ANALYSIS
     The pipeline is designed for the analysis of Whole Metagenome Shotgun data from Illumina sequencing 
 
-    For samples CSV, three columns named "sample", "fastq1" and "fastq2" are required. 
+    For samples CSV, three columns named "sample", "fastq1" and "fastq2" are required if input fastq files are paired end. If they are single end, two columns named
+	"sample" and "fastq1" are needed.
 
     All the parameters must be specified in the nextflow.config configuration file. Then, you can run the pipeline 
     with the following command:
@@ -41,7 +42,8 @@ nextflow run main.nf --help
     The following parameters must be specified in nextflow.config file or directly in nextflow command line (in this 
     second case the value specified in nextflow.config will be overwritten):
     --input_reads			Path to the comma-separated sample file
-    --outdir				Path to a folder where to store results 
+    --outdir				Path to a folder where to store results
+	--single_end			Indication whether fastq input files are single end or paired end
     --genome_fasta			Path to the genome fasta file 
     --genome_index			Path to the folder containing the index of the genome (default: false, in this case 
 							the indexing of the genome will be done by the pipeline)
@@ -62,11 +64,17 @@ nextflow run main.nf --help
     --save_reference		Choose whether saving or not the downloaded reference databases (default: true)
 ```
 
-Preparare the sample.csv file with the following structure:
+Preparare the samples_paired_end.csv file with the following structure if the input fastq files are paired end:
 ```
 sample,fastq1,fastq2
 sample_name1,path/to/sample_name1_R1.fastq,path/to/sample_name1_R2.fastq
 sample_name2,path/to/sample_name2_R1.fastq,path/to/sample_name2_R2.fastq
+```
+Preparare the samples_single_end.csv file with the following structure if the input fastq files are single end:
+```
+sample,fastq1
+sample_name1,path/to/sample_name1.fastq
+sample_name2,path/to/sample_name2.fastq
 ```
 
 # Workflow description
