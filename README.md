@@ -11,7 +11,7 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 * [Apptainer](https://apptainer.org/)
 
 # Overview
-<img width="16384" height="10876" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/83ba19ab-eb9f-4dc0-95a3-42901251a44e" />
+<img width="16384" height="10783" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/352525d5-2310-4158-a437-69008054393d" />
 
 # Usage
 First, clone the repository:
@@ -25,8 +25,9 @@ nextflow run main.nf --help
     WHOLE METAGENOME SHOTGUN SEQUENCING ANALYSIS
     The pipeline is designed for the analysis of Whole Metagenome Shotgun data from Illumina sequencing 
 
-    For samples CSV, three columns named "sample", "fastq1" and "fastq2" are required if input fastq files are paired end. If they are single end, two columns named
-	"sample" and "fastq1" are needed.
+    For samples CSV, three columns named "sample", "fastq1" and "fastq2" are required if two paired-end fastq files
+	are used as input. 	If the input is a single fastq file with merged paired-end reads, two columns named "sample"
+	and "merged_fastq" are needed.
 
     All the parameters must be specified in the nextflow.config configuration file. Then, you can run the pipeline 
     with the following command:
@@ -43,7 +44,8 @@ nextflow run main.nf --help
     second case the value specified in nextflow.config will be overwritten):
     --input_reads			Path to the comma-separated sample file
     --outdir				Path to a folder where to store results
-	--single_end			Indication whether fastq input files are single end or paired end
+	--merged_paired_fastq	Specification whether the input fastq file has been obtained by the merging of forward and
+							reverse reads (default: false)
     --genome_fasta			Path to the genome fasta file 
     --genome_index			Path to the folder containing the index of the genome (default: false, in this case 
 							the indexing of the genome will be done by the pipeline)
@@ -64,25 +66,30 @@ nextflow run main.nf --help
     --save_reference		Choose whether saving or not the downloaded reference databases (default: true)
 ```
 
-Preparare the samples_paired_end.csv file with the following structure if the input fastq files are paired end:
+Preparare the samples_paired_end.csv file with the following structure if the input fastq files are separated:
 ```
 sample,fastq1,fastq2
 sample_name1,path/to/sample_name1_R1.fastq,path/to/sample_name1_R2.fastq
 sample_name2,path/to/sample_name2_R1.fastq,path/to/sample_name2_R2.fastq
 ```
-Preparare the samples_single_end.csv file with the following structure if the input fastq files are single end:
+Preparare the sampled.csv file with the following structure if the input fastq files have been obtained by the 
+merging of forward and reverse reads:
 ```
-sample,fastq1
+sample,merged_fastq
 sample_name1,path/to/sample_name1.fastq
 sample_name2,path/to/sample_name2.fastq
 ```
 
 # Workflow description
-1. [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [multiqc](https://github.com/MultiQC/MultiQC) for quality control of raw reads
+1. [seqkit](https://bioinf.shenwei.me/seqkit/) for splitting of raw reads in forward and reverse reads, if necessary
+1. [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [multiqc](https://github.com/MultiQC/MultiQC) for
+   quality control of raw reads
 1. [fastp](https://github.com/OpenGene/fastp) for quality control and adapter trimming 
-1. [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) and [Samtools](https://www.htslib.org/) for alignment to the reference genome of the host and removal of contaminations
+1. [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) and [Samtools](https://www.htslib.org/) for alignment to the
+   reference genome of the host and removal of contaminations
 1. Merge forward and reverse fastq files using **cat**
-1. [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [multiqc](https://github.com/MultiQC/MultiQC) for quality control of filtered reads
+1. [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [multiqc](https://github.com/MultiQC/MultiQC) for quality
+   control of filtered reads
 1. [Metaphlan](https://github.com/biobakery/MetaPhlAn)
    1. Taxonomic profiling at sample level
    1. **merge_metaphlan_tables.py** to merge profiles from all the samples in a single file
