@@ -11,7 +11,7 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 * [Apptainer](https://apptainer.org/)
 
 # Overview
-<img width="16384" height="10783" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/8c35c7f1-da9e-4233-88a6-931cba7250b0" />
+<img width="16384" height="10783" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/1e898900-fa73-40c3-85d4-cbcf8c103299" />
 
 # Usage
 First, clone the repository:
