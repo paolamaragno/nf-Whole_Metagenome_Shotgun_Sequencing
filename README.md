@@ -72,7 +72,7 @@ sample,fastq1,fastq2
 sample_name1,path/to/sample_name1_R1.fastq,path/to/sample_name1_R2.fastq
 sample_name2,path/to/sample_name2_R1.fastq,path/to/sample_name2_R2.fastq
 ```
-Preparare the sampled.csv file with the following structure if the input fastq files have been obtained by the 
+Preparare the samples.csv file with the following structure if the input fastq files have been obtained by the 
 merging of forward and reverse reads:
 ```
 sample,merged_fastq
