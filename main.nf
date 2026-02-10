@@ -59,13 +59,17 @@ workflow {
 	reads = Channel
 		.fromPath(params.input_reads)
 		.splitCsv(header: true)
-    		.map { row ->
-        	if (params.merged_paired_fastq) {
+		.map { row ->
+		if (params.merged_paired_fastq) {
+	
 			return tuple(row.sample, file(row.merged_fastq))
-	} else {
-		return tuple(row.sample, [file(row.fastq1), file(row.fastq2)])
-        }
-    	}
+	
+		} else {
+		
+			return tuple(row.sample, [file(row.fastq1), file(row.fastq2)])
+		
+		}	
+	}
 
 	if (params.merged_paired_fastq) {
 
@@ -142,9 +146,7 @@ workflow {
 
                 index_genome = COPY_GENOME_INDEX.out.genome_index
            
-	}
-
-        else {
+	} else {
 
 		BUILD_GENOME_INDEX(params.genome_fasta)
 
@@ -199,6 +201,3 @@ workflow {
 	printComplete()
 
 }
-
-
-
