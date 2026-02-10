@@ -52,7 +52,7 @@ workflow {
 
 	log.info(log_text)
 
-        write_log(log_text)
+	write_log(log_text)
 
 	ch_versions = Channel.empty()
 
@@ -84,11 +84,11 @@ workflow {
 
 	}
 
-        ch_versions = ch_versions.mix(FASTQC_RAW_READS.out.versions)
+	ch_versions = ch_versions.mix(FASTQC_RAW_READS.out.versions)
 
-        MULTIQC_RAW_READS(FASTQC_RAW_READS.out.fastqc_raw_out.collect())
+	MULTIQC_RAW_READS(FASTQC_RAW_READS.out.fastqc_raw_out.collect())
 
-        ch_versions = ch_versions.mix(MULTIQC_RAW_READS.out.versions)
+	ch_versions = ch_versions.mix(MULTIQC_RAW_READS.out.versions)
 
 	min_length_ch = GET_GLOBAL_MIN_LENGTH(MULTIQC_RAW_READS.out.data_dir)
 
@@ -103,7 +103,7 @@ workflow {
 
 	}
 	
-        ch_versions = ch_versions.mix(FASTP.out.versions)
+	ch_versions = ch_versions.mix(FASTP.out.versions)
 
 	if (params.metaphlan_db) {
 
@@ -120,23 +120,23 @@ workflow {
 
                 ch_humann_proteins = Channel.value(params.humann_protein_db)
 
-        } else { 
+	} else { 
 
                 ch_humann_proteins = HUMANN_INSTALL_DB_PROTEINS().humann_db_proteins
                 ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_PROTEINS.out.versions)          
 
-        }
+	}
 
 	if (params.humann_nucleotide_db) {
 
                 ch_humann_nucleo = Channel.value(params.humann_nucleotide_db)
 
-        } else {
+	} else {
 
                 ch_humann_nucleo = HUMANN_INSTALL_DB_NUCLEOTIDES().humann_db_nucleo
                 ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_NUCLEOTIDES.out.versions)
 
-        }
+	}
 
 	if (params.genome_index) {
 
@@ -154,7 +154,7 @@ workflow {
 
                 index_genome = BUILD_GENOME_INDEX.out.genome_index
 
-        }
+	}
 
 	REMOVE_HOST_READS(index_genome, FASTP.out.fastp_reads)
 
