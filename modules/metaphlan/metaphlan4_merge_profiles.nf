@@ -2,15 +2,13 @@
 
 process METAPHLAN4_MERGE_PROFILES {
 
-	cpus = { 2 * task.attempt }
-	memory = { 2.GB * task.attempt }
+	cpus { 2 + (2 * (task.attempt - 1)) }
+	memory { 2.GB + (2.GB* (task.attempt -1 ))}
 
-	publishDir = [
-		path: { "${params.outdir}/metaphlan4.1.1/" },
+	publishDir "${params.outdir}/metaphlan4.1.1/",
 		mode: 'copy',
 		saveAs: { fn -> if (fn.equals("versions_metaphlan.yml")) { return null }
                         else { return fn } }
-	]
 
 	if( params.run_mode == 'conda' ) {
 		conda "metaphlan=4.1.1"

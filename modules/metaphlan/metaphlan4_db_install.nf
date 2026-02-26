@@ -2,8 +2,8 @@
 
 process METAPHLAN_INSTALL {
 
-	cpus = { 2 * task.attempt }
-	memory = { 2.GB * task.attempt }
+	cpus { 2 + (2 * (task.attempt -1 )) }
+	memory { 2.GB + (2.GB * (task.attempt -1))}
 
 	if( params.run_mode == 'conda' ) {
 		conda 'metaphlan=4.1.1'
@@ -11,13 +11,11 @@ process METAPHLAN_INSTALL {
 		container 'biocontainers/metaphlan:4.1.1--pyhdfd78af_0'
 	}
 
-	publishDir = [
-		path: { "${params.outdir}/references" },
+	publishDir "${params.outdir}/references",
 		mode: 'copy',
 		enabled: params.save_reference,
 		saveAs: { fn -> if (fn.equals("versions_metaphlan.yml")) { return null }
                         else { return fn } }
-	]
 
 	output:
 	path "metaphlan_db", emit: metaphlan_db

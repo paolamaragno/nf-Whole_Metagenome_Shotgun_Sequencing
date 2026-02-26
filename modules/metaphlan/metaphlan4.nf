@@ -2,16 +2,14 @@
 
 process METAPHLAN4 {
 
-	cpus = { 8 * task.attempt }
-	memory = { 30.GB * task.attempt }
+	cpus { 8 + (2 * (task.attempt -1 )) }
+	memory { 30.GB + (5.GB * (task.attempt -1 )) }
 
 	tag "Metaphlan4 on $sample_id"	
-	publishDir = [
-		path: { "${params.outdir}/metaphlan4.1.1/${sample_id}" },
+	publishDir "${params.outdir}/metaphlan4.1.1/${sample_id}",
 		mode: 'copy',
 		saveAs: { fn -> if (fn == "versions_metaphlan.yml" || fn == "${processed_fastq}") { return null }
                         else { return fn } }
-	]
 
 	if( params.run_mode == 'conda' ) {
 		conda "metaphlan=4.1.1"
