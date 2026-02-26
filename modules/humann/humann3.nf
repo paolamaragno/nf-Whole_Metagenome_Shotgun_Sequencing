@@ -2,8 +2,9 @@
 
 process HUMANN3 {
 
-	cpus = { 8 * task.attempt }
-	memory = { 40.GB * task.attempt }
+	cpus { 10 + (2 * (task.attempt -1)) }
+	memory { 100.GB + (10.GB * (task.attempt -1)) }
+	time '48h'
 
 	tag "Humann3 on $sample_id"
 
@@ -32,7 +33,7 @@ process HUMANN3 {
 	        """
                 humann_config --update database_folders utility_mapping ${humann_utility_mapping}
 
-		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234"  
+		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234" --diamond-options "--block-size 0.5 --index-chunks 6  --top 1"
 
 		humann_regroup_table -i ${sample_id}_filtered.final_R1_R2_genefamilies.tsv -o ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --groups ${params.regroup_option}
 		humann_rename_table --input ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --output ${sample_id}_filtered.final_R1_R2_genefamilies_KO_renamed.tsv --names ${params.rename_option}
@@ -47,17 +48,17 @@ process HUMANN3 {
                 """
         } else {
                 """
-		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234"  
+		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --taxonomic-profile ${profile} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234" --diamond-options "--block-size 0.5 --index-chunks 6 --top 1" 
 
 		humann_regroup_table -i ${sample_id}_filtered.final_R1_R2_genefamilies.tsv -o ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --groups ${params.regroup_option}
 		humann_rename_table --input ${sample_id}_filtered.final_R1_R2_genefamilies_KO_not_renamed.tsv --output ${sample_id}_filtered.final_R1_R2_genefamilies_KO_renamed.tsv --names ${params.rename_option}
 
 		cat <<-END_VERSIONS > versions_humann.yml
 	        "${task.process}":
-	           humann: \$(echo \$(humann --version | sed 's/^.*humann //; s/Using.*\$//'))
-	           methaphlan: \$(echo \$(metaphlan --version | sed 's/^.*MetaPhlAn version //; s/Using.*\$//'))
-	           diamond: \$(echo \$(diamond --version | sed 's/^.*diamond version //; s/Using.*\$//'))
-	           bowtie2: \$(echo \$(bowtie2-build --version | head -n1 | sed 's/^.*bowtie2-build-s version //'))
+	            humann: \$(echo \$(humann --version | sed 's/^.*humann //; s/Using.*\$//'))
+	            methaphlan: \$(echo \$(metaphlan --version | sed 's/^.*MetaPhlAn version //; s/Using.*\$//'))
+	            diamond: \$(echo \$(diamond --version | sed 's/^.*diamond version //; s/Using.*\$//'))
+	            bowtie2: \$(echo \$(bowtie2-build --version | head -n1 | sed 's/^.*bowtie2-build-s version //'))
 		END_VERSIONS
 		"""
         }

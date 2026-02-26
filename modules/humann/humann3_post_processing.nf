@@ -2,15 +2,13 @@
 
 process HUMANN3_POST_PROCESSING {
 
-	cpus = { 1 * task.attempt }
-	memory = { 5.GB * task.attempt }
+	cpus { 1 + (2 * (task.attempt - 1)) }
+	memory { 5.GB + (2.GB * (task.attempt - 1))}
 
-	publishDir = [
-		path: { "${params.outdir}/humann3.9" },
+	publishDir "${params.outdir}/humann3.9",
 		mode: 'copy',
 		saveAs: { fn -> if (fn.equals("versions_humann.yml")) { return null }
                         else { return fn } }
-	]
 
 	if( params.run_mode == 'conda' ) {
 		conda 'biobakery::humann=3.9 metaphlan=4.1.1 python=3.7'

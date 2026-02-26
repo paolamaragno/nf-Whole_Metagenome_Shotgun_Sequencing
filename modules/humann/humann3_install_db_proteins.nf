@@ -2,8 +2,8 @@
 
 process HUMANN_INSTALL_DB_PROTEINS {
 
-	cpus = { 2 * task.attempt }
-        memory = { 5.GB * task.attempt }
+	cpus { 2 + (2 * (task.attempt - 1)) }
+        memory { 5.GB + (2.GB * (task.attempt -1 ))}
 
 	if( params.run_mode == 'conda' ) {
 		conda 'biobakery::humann=3.9'
@@ -11,13 +11,11 @@ process HUMANN_INSTALL_DB_PROTEINS {
 		container 'biocontainers/humann:3.9--py312hdfd78af_0'
 	}
 
-	publishDir = [
-		path: { "${params.outdir}/references" },
+	publishDir "${params.outdir}/references",
 		mode: 'copy',
 		enabled: params.save_reference,
 		saveAs: { fn -> if (fn.equals("versions_humann_install_db_proteins.yml")) { return null }
                         else { return fn } }
-	]
 
 	output:
 	path "humann_db/uniref", emit: humann_db_proteins
