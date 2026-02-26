@@ -2,16 +2,14 @@
 
 process REMOVE_HOST_READS {
 
-	cpus = { 10 * task.attempt }
-	memory = { 30.GB * task.attempt }
+	cpus { 10 + (2 * (task.attempt - 1)) }
+	memory { 30.GB + (5.GB * (task.attempt - 1)) }
 
 	tag "Host reads removal from  $sample_id"
-	publishDir = [
-		path: { "${params.outdir}/processed_reads/${sample_id}" },
+	publishDir  "${params.outdir}/processed_reads/${sample_id}",
 		mode: 'copy',
 		saveAs: { fn -> if (fn.equals("versions_bowtie2.yml")) { return null }
                         else { return fn } }
-	]
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bowtie2=2.5.4 samtools=1.22.1'

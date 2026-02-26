@@ -1,7 +1,7 @@
 process COLLECT_VERSIONS {
 
-	cpus = { 1 * task.attempt }
-	memory = { 2.GB * task.attempt }
+	cpus { 1 + (2 * (task.attempt - 1)) }
+	memory { 2.GB + (2.GB * (task.attempt - 1)) }
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::multiqc=1.23'

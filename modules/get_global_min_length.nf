@@ -1,7 +1,7 @@
 process GET_GLOBAL_MIN_LENGTH {
 
-	cpus = { 1 * task.attempt }
-	memory = { 2.GB * task.attempt }
+	cpus { 1 + (2 * (task.attempt - 1)) }
+	memory { 2.GB + (2.GB * (task.attempt -1 )) }
 	
 	input:
 	path(multiqc_raw_out)

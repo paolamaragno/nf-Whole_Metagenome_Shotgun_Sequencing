@@ -2,10 +2,10 @@
 
 process FASTQC_RAW_READS {
 
-	cpus = { 3 * task.attempt }
-	memory = { 6.GB * task.attempt }
+	cpus { 3 + (2 * (task.attempt - 1))}
+	memory { 6.GB + (2.GB * (task.attempt -1))}
 
-	tag "Fastqc on raw reads of $name"
+	tag "Fastqc on raw reads of $sample"
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::fastqc'
@@ -14,7 +14,7 @@ process FASTQC_RAW_READS {
 	}
 
 	input:
-	tuple val(name), path(fastq1), path(fastq2)
+	tuple val(sample), path(fastq1), path(fastq2)
 
 	output:
 	path "*_fastqc.{zip,html}", emit: fastqc_raw_out

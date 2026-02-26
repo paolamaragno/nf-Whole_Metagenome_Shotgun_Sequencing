@@ -2,8 +2,8 @@
 
 process FASTQC_FILTERED_READS {
 
-	cpus = { 2 + (1 * (task.attempt-1)) }
-	memory = { 6.GB + (2.GB * (task.attempt-1))}
+	cpus { 2 + (1 * (task.attempt-1)) }
+	memory { 6.GB + (2.GB * (task.attempt-1))}
 
 	tag "Fastqc on filtered reads of $name"
 

@@ -2,16 +2,14 @@
 
 process BUILD_GENOME_INDEX {
 
-	cpus = { 7 * task.attempt }
-	memory { 8.GB * task.attempt }
+	cpus { 7 + (2 * (task.attempt -1)) }
+	memory { 8.GB + (2.GB * (task.attempt -1)) }
 
-	publishDir = [
-		path: {"${params.outdir}/references" },
+	publishDir "${params.outdir}/references",
 		mode: 'copy',
 		enabled: params.save_reference,
 		saveAs: { fn -> if (fn.equals("versions_bowtie_index_genome.yml")) { return null }
                         else { return fn } }
-	]
 
 	if( params.run_mode == 'conda' ) {
                 conda 'bowtie2=2.5.4'

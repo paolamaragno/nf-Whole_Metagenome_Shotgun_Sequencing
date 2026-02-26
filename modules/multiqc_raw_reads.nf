@@ -1,14 +1,12 @@
 process MULTIQC_RAW_READS {
 
-	cpus = { 1 * task.attempt }
-	memory = { 2.GB * task.attempt }
+	cpus { 1 + (2 * (task.attempt - 1)) }
+	memory { 2.GB + (2.GB * (task.attempt -1)) }
 	
-	publishDir = [
-		path: { "${params.outdir}/multiqc_on_raw_reads" }, 
+	publishDir "${params.outdir}/multiqc_on_raw_reads", 
 		mode: 'copy',
 		saveAs: { fn -> if (fn.equals("versions_multiqc.yml")) { return null }
                         else { return fn } }
-	]
 	
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::multiqc==1.23 python=3.10'

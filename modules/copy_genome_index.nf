@@ -2,8 +2,8 @@
 
 process COPY_GENOME_INDEX {
 
-	cpus = { 1 * task.attempt }
-	memory = { 5.GB * task.attempt }
+	cpus { 1 + (2 * (task.attempt -1)) }
+	memory { 5.GB + (2.GB * (task.attempt -1)) }
 
 	input:
 	path(genome_index)

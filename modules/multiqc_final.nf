@@ -1,12 +1,9 @@
 process MULTIQC_FINAL {
 
-	cpus = { 1 * task.attempt }
-	memory = { 2.GB * task.attempt }
+	cpus { 1 + (2 * (task.attempt - 1)) }
+	memory { 2.GB + (2.GB * (task.attempt - 1)) }
 	
-	publishDir = [
-		path: { "${params.outdir}/multiqc" }, 
-		mode: 'copy'
-	]
+	publishDir "${params.outdir}/multiqc", mode: 'copy'
 	
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::multiqc==1.23 python=3.10'

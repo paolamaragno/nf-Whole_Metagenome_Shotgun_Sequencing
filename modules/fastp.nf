@@ -2,16 +2,14 @@
 
 process FASTP {
 
-	cpus = { 5 * task.attempt }
-	memory = { 7.GB * task.attempt }
+	cpus { 5 + (2 * (task.attempt-1)) }
+	memory { 7.GB + (2.GB * (task.attempt -1)) }
 
 	tag "Fastp on $name"
-	publishDir = [
-		path: { "${params.outdir}/fastp/${name}" },
+	publishDir "${params.outdir}/fastp/${name}",
 		mode: 'copy',
 		saveAs: { fn -> if (fn.equals("versions_fastp.yml")) { return null }
 			else { return fn } }
-	]
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::fastp=1.0.1'
