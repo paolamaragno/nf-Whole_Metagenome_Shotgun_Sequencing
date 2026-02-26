@@ -66,7 +66,7 @@ workflow {
 	
 		} else {
 		
-			return tuple(row.sample, [file(row.fastq1), file(row.fastq2)])
+			return tuple(row.sample, file(row.fastq1), file(row.fastq2))
 		
 		}	
 	}
