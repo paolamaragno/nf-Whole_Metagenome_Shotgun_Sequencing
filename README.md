@@ -32,7 +32,7 @@ nextflow run main.nf --help
     All the parameters must be specified in the nextflow.config configuration file. Then, you can run the pipeline 
     with the following command:
 
-    nextflow run main.nf -c nextflow.config -profile <desired profile> --input samples.csv 
+    nextflow run main.nf -c nextflow.config -profile <desired profile> --input_reads samples.csv 
 
     Command line arguments:
     
