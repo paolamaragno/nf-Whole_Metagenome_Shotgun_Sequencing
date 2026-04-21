@@ -10,9 +10,6 @@ This pipeline exploits the BioBakery tools developed for microbial community pro
 * [Singularity](https://docs.sylabs.io/guides/3.0/user-guide/installation.html)
 * [Apptainer](https://apptainer.org/)
 
-# Overview
-<img width="16384" height="10783" alt="pipeline_flowchart" src="https://github.com/user-attachments/assets/9e2edcd2-5ace-4067-9280-63bb2cf88fe6" />
-
 # Usage
 First, clone the repository:
 ```
@@ -42,30 +39,31 @@ nextflow run main.nf --help
 
     The following parameters must be specified in nextflow.config file or directly in nextflow command line (in this 
     second case the value specified in nextflow.config will be overwritten):
-    --input_reads			Path to the comma-separated sample file
-    --outdir				Path to a folder where to store results
-	--merged_paired_fastq	Specification whether the input fastq file has been obtained by the merging of forward and
-							reverse reads (default: false)
-    --genome_fasta			Path to the genome fasta file 
-    --genome_index			Path to the folder containing the index of the genome (default: false, in this case 
-							the indexing of the genome will be done by the pipeline)
-    --idx_genome			Name to use for the the index of the genome
-    --metaphlan_db			Path to the folder containing Metaphlan database (default: false, in this case the 
-							database will be downloaded by the pipeline)
-    --metaphlan_db_index	Desired version for metaphlan database (possibile values: "mpa_vJun23_CHOCOPhlAnSGB_202403"
-							or "mpa_vJan25_CHOCOPhlAnSGB_202503")
-	--skip_humann			Whether to skip functional analysis (default: false)
-    --humann_nucleotide_db	Path to the folder containing Humann nucleotide database (default: false, in this case 
-							the database will be downloaded by the pipeline)
-    --humann_protein_db		Path to the folder containing Humann protein database (default: false, in this case 
-							the database will be downloaded by the pipeline)
-    --gene_families_db		Specification of the version of Uniref database for gene family definitions 
-							(default: "uniref90")
-    --regroup_option		Specification of the functional category in which regrouping gene families
-							(default: "uniref90_ko")
-    --rename_option			Specification of the feature type in which rename gene families 
-							(default: "kegg-orthology")
-    --save_reference		Choose whether saving or not the downloaded reference databases (default: true)
+    --input_reads				Path to the comma-separated sample file
+    --outdir					Path to a folder where to store results
+	--merged_paired_fastq		Specification whether the input fastq file has been obtained by the merging of forward and
+								reverse reads (default: false)
+    --genome_fasta				Path to the genome fasta file 
+    --genome_index				Path to the folder containing the index of the genome (default: false, in this case 
+								the indexing of the genome will be done by the pipeline)
+    --idx_genome				Name to use for the the index of the genome
+    --metaphlan_db				Path to the folder containing Metaphlan database (default: false, in this case the 
+								database will be downloaded by the pipeline)
+	--metaphlan_db_for_humann	Path to the folder containing Metaphlan database to use if Metaphlan is run into Humann (default: false, in this case 								the database will be downloaded by the pipeline)
+    --metaphlan_db_index		Desired version for metaphlan database (possibile values: "mpa_vJun23_CHOCOPhlAnSGB_202403"
+								or "mpa_vJan25_CHOCOPhlAnSGB_202503")
+	--skip_humann				Whether to skip functional analysis (default: false)
+    --humann_nucleotide_db		Path to the folder containing Humann nucleotide database (default: false, in this case 
+								the database will be downloaded by the pipeline)
+    --humann_protein_db			Path to the folder containing Humann protein database (default: false, in this case 
+								the database will be downloaded by the pipeline)
+    --gene_families_db			Specification of the version of Uniref database for gene family definitions 
+								(default: "uniref90")
+    --regroup_option			Specification of the functional category in which regrouping gene families
+								(default: "uniref90_ko")
+    --rename_option				Specification of the feature type in which rename gene families 
+								(default: "kegg-orthology")
+    --save_reference			Choose whether saving or not the downloaded reference databases (default: true)
 ```
 
 Preparare the samples_paired_end.csv file with the following structure if the input fastq files are separated:
@@ -81,12 +79,18 @@ sample,merged_fastq
 sample_name1,path/to/sample_name1.fastq
 sample_name2,path/to/sample_name2.fastq
 ```
-This pipeline supports Metaphlan analysis performed either using the last version of Metpahlan database - mpa_vJan25_CHOCOPhlAnSGB_202503 -
+This pipeline supports Metaphlan analysis performed either using the last version of Metaphlan database - mpa_vJan25_CHOCOPhlAnSGB_202503 -
 or the last but one - mpa_vJun23_CHOCOPhlAnSGB_202403. In the first case, Metaphlan will be re-excecuted by Humann because it
 doesn't support as input profile.txt files generated by Metaphlan with the lastest version of Metaphlan database.
 
 Humann tool in this pipeline works with the last versions of Chocophlan and UniRef90 databases: v201901_v31 and 201901b_full,
 respecitively.
+
+This is the overview of the pipeline when Metaphlan database mpa_vJun23_CHOCOPhlAnSGB_202403 is used:
+<img width="6092" height="4800" alt="flowchart_vJan25_metaphlan_db" src="https://github.com/user-attachments/assets/50f08278-cf26-41c6-9b45-670212358457" />
+
+This is the overview of the pipeline when Metaphlan database mpa_vJan25_CHOCOPhlAnSGB_202503 is used:
+<img width="6088" height="4800" alt="flowchar_vJun23_metaphlan_db" src="https://github.com/user-attachments/assets/b471c6e7-9fd8-4e05-9005-5f53562d8264" />
 
 
 # Workflow description
