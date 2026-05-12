@@ -5,7 +5,7 @@ def helpMessage() {
     log.info"""
 
     WHOLE METAGENOME SHOTGUN SEQUENCING ANALYSIS
-    The pipeline is designed for the analysis of Whole Metagenome Shotgun data from Illumina sequencing 
+    The pipeline is designed for the analysis of Whole Metagenome Shotgun data from Illumina sequencing. 
 
     For samples CSV, three columns named "sample", "fastq1" and "fastq2" are required. 
 
@@ -25,7 +25,7 @@ def helpMessage() {
     --input_reads		Path to the comma-separated sample file
     --outdir			Path to a folder where to store results 
     --merged_paired_fastq	Specification whether the input fastq file has been obtained by the merging of 
-				forward and reverse reads
+				forward and reverse reads (default: false)
     --genome_fasta		Path to the genome fasta file 
     --genome_index		Path to the folder containing the index of the genome (default: false, in this case 
 				the indexing of the genome will be done by the pipeline)
@@ -34,8 +34,9 @@ def helpMessage() {
 				database will be downloaded by the pipeline)
     --metaphlan_db_for_humann	Path to the folder containing Metaphlan database to use if Metaphlan is run into 
 				Humann (default: false, in this case the database will be downloaded by the pipeline)
-    --metaphlan_db_index	Desired version for metaphlan database
-    --skip_humann		Whether to skip functional analysis 
+    --metaphlan_db_index	Desired version for metaphlan database (only "mpa_vJun23_CHOCOPhlAnSGB_202403" or 
+				"mpa_vJan25_CHOCOPhlAnSGB_202503" are possible)
+    --skip_humann		Whether to skip functional analysis (default: false)
     --humann_nucleotide_db	Path to the folder containing Humann nucleotide database (default: false, in this case 
 				the database will be downloaded by the pipeline)
     --humann_protein_db		Path to the folder containing Humann protein database (default: false, in this case 

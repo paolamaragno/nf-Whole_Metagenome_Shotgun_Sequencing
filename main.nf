@@ -7,8 +7,8 @@ log_text = """
     =========================================================
     Input reads: $params.input_reads
     Output directory: $params.outdir
-    Path to the genome fasta file: $params.genome_fasta
     Specification whether the input fastq file has been obtained by the merging of forward and reverse reads: $params.merged_paired_fastq
+    Path to the genome fasta file: $params.genome_fasta
     Path to the folder containing the index of the genome: $params.genome_index
     Name to use for the the index of the genome: $params.idx_genome
     Path to the folder containing Metaphlan database: $params.metaphlan_db
@@ -122,7 +122,7 @@ workflow {
 
 	FASTP_COLLECT(FASTP.out.json.collect())
 
-        ch_versions = ch_versions.mix(FASTP_COLLECT.out.versions)
+	ch_versions = ch_versions.mix(FASTP_COLLECT.out.versions)
 
 	// metahplan database
 	if (params.metaphlan_db) {
@@ -187,7 +187,7 @@ workflow {
 
                 } else {
 
-                        ch_humann_proteins = HUMANN_INSTALL_DB_PROTEINS().humann_db_proteins
+			ch_humann_proteins = HUMANN_INSTALL_DB_PROTEINS().humann_db_proteins
 			ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_PROTEINS.out.versions)
 
                 }
@@ -199,7 +199,7 @@ workflow {
 
                 } else {
 
-                        ch_humann_nucleo = HUMANN_INSTALL_DB_NUCLEOTIDES().humann_db_nucleo
+			ch_humann_nucleo = HUMANN_INSTALL_DB_NUCLEOTIDES().humann_db_nucleo
 			ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_NUCLEOTIDES.out.versions)
 
                 }
@@ -243,7 +243,7 @@ workflow {
         
 			HUMANN3_POST_PROCESSING(HUMANN3_WITH_METAPHLAN.out.genefamilies_KO_renamed.collect(), HUMANN3_WITH_METAPHLAN.out.pathabundance.collect())
 
-	                ch_versions = ch_versions.mix(HUMANN3_POST_PROCESSING.out.versions)
+			ch_versions = ch_versions.mix(HUMANN3_POST_PROCESSING.out.versions)
 
 		}
 
