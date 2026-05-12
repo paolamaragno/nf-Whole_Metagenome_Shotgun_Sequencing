@@ -124,7 +124,7 @@ workflow {
 
 	ch_versions = ch_versions.mix(FASTP_COLLECT.out.versions)
 
-	// metahplan database
+	// metaphlan database
 	if (params.metaphlan_db) {
 
 		ch_metaphlan_db = Channel.value(params.metaphlan_db)
