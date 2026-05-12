@@ -149,9 +149,9 @@ workflow {
 
 	        BUILD_GENOME_INDEX(params.genome_fasta)
 
-		ch_versions = ch_versions.mix(BUILD_GENOME_INDEX.out.versions)
+                ch_versions = ch_versions.mix(BUILD_GENOME_INDEX.out.versions)
 
-		index_genome = BUILD_GENOME_INDEX.out.genome_index
+                index_genome = BUILD_GENOME_INDEX.out.genome_index
 
 	}
 
@@ -187,8 +187,8 @@ workflow {
 
                 } else {
 
-			ch_humann_proteins = HUMANN_INSTALL_DB_PROTEINS().humann_db_proteins
-			ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_PROTEINS.out.versions)
+                        ch_humann_proteins = HUMANN_INSTALL_DB_PROTEINS().humann_db_proteins
+                        ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_PROTEINS.out.versions)
 
                 }
 
@@ -199,8 +199,8 @@ workflow {
 
                 } else {
 
-			ch_humann_nucleo = HUMANN_INSTALL_DB_NUCLEOTIDES().humann_db_nucleo
-			ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_NUCLEOTIDES.out.versions)
+                        ch_humann_nucleo = HUMANN_INSTALL_DB_NUCLEOTIDES().humann_db_nucleo
+                        ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_NUCLEOTIDES.out.versions)
 
                 }
 
@@ -209,7 +209,7 @@ workflow {
                 if (params.run_mode == 'conda') {
 
                         humann_utility_mapping_ch = HUMANN_INSTALL_UTILITY_MAPPING().humann_utility_mapping
-			ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
+                        ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
 
                 }
 
