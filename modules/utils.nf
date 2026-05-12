@@ -35,7 +35,7 @@ def helpMessage() {
     --metaphlan_db_for_humann	Path to the folder containing Metaphlan database to use if Metaphlan is run into 
 				Humann (default: false, in this case the database will be downloaded by the pipeline)
     --metaphlan_db_index	Desired version for metaphlan database (only "mpa_vJun23_CHOCOPhlAnSGB_202403" or 
-				"mpa_vJan25_CHOCOPhlAnSGB_202503" are possible)
+				"mpa_vJan25_CHOCOPhlAnSGB_202503" are possible, default: "mpa_vJan25_CHOCOPhlAnSGB_202503")
     --skip_humann		Whether to skip functional analysis (default: false)
     --humann_nucleotide_db	Path to the folder containing Humann nucleotide database (default: false, in this case 
 				the database will be downloaded by the pipeline)

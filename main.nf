@@ -142,18 +142,18 @@ workflow {
 		COPY_GENOME_INDEX(params.genome_index)
 
 		ch_versions = ch_versions.mix(COPY_GENOME_INDEX.out.versions)
-
-	        index_genome = COPY_GENOME_INDEX.out.genome_index
+     
+                index_genome = COPY_GENOME_INDEX.out.genome_index
            
         } else {
-
-	        BUILD_GENOME_INDEX(params.genome_fasta)
+        
+                BUILD_GENOME_INDEX(params.genome_fasta)
 
                 ch_versions = ch_versions.mix(BUILD_GENOME_INDEX.out.versions)
 
                 index_genome = BUILD_GENOME_INDEX.out.genome_index
 
-	}
+       }
 
 	// decontamination
 	REMOVE_HOST_READS(index_genome, FASTP.out.fastp_reads)
@@ -226,7 +226,7 @@ workflow {
 		} else {
 
 			// install metaphlan database vJun23
-			if (params.metaphlan_db_for_humann) {
+                        if (params.metaphlan_db_for_humann) {
 
                                 ch_metaphlan_db_for_humann = Channel.value(params.metaphlan_db_for_humann)
 
