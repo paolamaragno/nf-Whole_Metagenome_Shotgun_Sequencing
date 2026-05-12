@@ -143,17 +143,17 @@ workflow {
 
 		ch_versions = ch_versions.mix(COPY_GENOME_INDEX.out.versions)
      
-                index_genome = COPY_GENOME_INDEX.out.genome_index
+		index_genome = COPY_GENOME_INDEX.out.genome_index
            
-        } else {
+	} else {
         
-                BUILD_GENOME_INDEX(params.genome_fasta)
+		BUILD_GENOME_INDEX(params.genome_fasta)
 
-                ch_versions = ch_versions.mix(BUILD_GENOME_INDEX.out.versions)
+		ch_versions = ch_versions.mix(BUILD_GENOME_INDEX.out.versions)
 
-                index_genome = BUILD_GENOME_INDEX.out.genome_index
+		index_genome = BUILD_GENOME_INDEX.out.genome_index
 
-       }
+	}
 
 	// decontamination
 	REMOVE_HOST_READS(index_genome, FASTP.out.fastp_reads)
@@ -180,38 +180,38 @@ workflow {
 	// humann execution
 	if (!params.skip_humann) {
 
-                // install humann proteins database
-                if (params.humann_protein_db) {
+		// install humann proteins database
+		if (params.humann_protein_db) {
 
-                        ch_humann_proteins = Channel.value(params.humann_protein_db)
+			ch_humann_proteins = Channel.value(params.humann_protein_db)
 
-                } else {
+		} else {
 
-                        ch_humann_proteins = HUMANN_INSTALL_DB_PROTEINS().humann_db_proteins
-                        ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_PROTEINS.out.versions)
+			ch_humann_proteins = HUMANN_INSTALL_DB_PROTEINS().humann_db_proteins
+			ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_PROTEINS.out.versions)
 
-                }
+		}
 
-                // install chocophlan
-                if (params.humann_nucleotide_db) {
+		// install chocophlan
+		if (params.humann_nucleotide_db) {
 
-                        ch_humann_nucleo = Channel.value(params.humann_nucleotide_db)
+			ch_humann_nucleo = Channel.value(params.humann_nucleotide_db)
 
-                } else {
+		} else {
 
-                        ch_humann_nucleo = HUMANN_INSTALL_DB_NUCLEOTIDES().humann_db_nucleo
-                        ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_NUCLEOTIDES.out.versions)
+			ch_humann_nucleo = HUMANN_INSTALL_DB_NUCLEOTIDES().humann_db_nucleo
+			ch_versions = ch_versions.mix(HUMANN_INSTALL_DB_NUCLEOTIDES.out.versions)
 
-                }
+		}
 
-                humann_utility_mapping_ch  = Channel.value([])
+		humann_utility_mapping_ch  = Channel.value([])
 
-                if (params.run_mode == 'conda') {
+		if (params.run_mode == 'conda') {
 
-                        humann_utility_mapping_ch = HUMANN_INSTALL_UTILITY_MAPPING().humann_utility_mapping
-                        ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
+			humann_utility_mapping_ch = HUMANN_INSTALL_UTILITY_MAPPING().humann_utility_mapping
+			ch_versions = ch_versions.mix(HUMANN_INSTALL_UTILITY_MAPPING.out.versions)
 
-                }
+		}
 
 		if (params.metaphlan_db_index == 'mpa_vJun23_CHOCOPhlAnSGB_202403') {
         
@@ -226,16 +226,16 @@ workflow {
 		} else {
 
 			// install metaphlan database vJun23
-                        if (params.metaphlan_db_for_humann) {
+			if (params.metaphlan_db_for_humann) {
 
-                                ch_metaphlan_db_for_humann = Channel.value(params.metaphlan_db_for_humann)
+				ch_metaphlan_db_for_humann = Channel.value(params.metaphlan_db_for_humann)
 
-                        } else {
+			} else {
 
-                                ch_metaphlan_db_for_humann  = METAPHLAN_INSTALL_FOR_HUMANN().metaphlan_db
-                                ch_versions = ch_versions.mix(METAPHLAN_INSTALL_FOR_HUMANN.out.versions)
+				ch_metaphlan_db_for_humann  = METAPHLAN_INSTALL_FOR_HUMANN().metaphlan_db
+				ch_versions = ch_versions.mix(METAPHLAN_INSTALL_FOR_HUMANN.out.versions)
 
-                        }
+			}
 
 			HUMANN3_WITH_METAPHLAN(REMOVE_HOST_READS.out.processed_reads, ch_metaphlan_db_for_humann, humann_utility_mapping_ch, ch_humann_nucleo, ch_humann_proteins)  
 
