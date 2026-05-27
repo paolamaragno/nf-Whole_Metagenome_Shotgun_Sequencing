@@ -18,8 +18,10 @@ log_text = """
     Path to the folder containing Humann nucleotide database: $params.humann_nucleotide_db
     Path to the folder containing Humann protein database: $params.humann_protein_db
     Specification of the version of Uniref database for gene family definitions: $params.gene_families_db
-    Specification of the functional category in which regrouping gene families:	$params.regroup_option
-    Specification of the feature type in which rename gene families: $params.rename_option
+    Specification whether regrouping gene families from UniRef90 to KEGG: $params.regroup_uniref90_to_ko
+    Specification whether renaming KEGG ids in human readable format: $params.rename_ko
+    Specification whether regrouping gene families from UniRef90 to EC: ${params.regroup_uniref90_to_ec}
+    Specification whether renaming EC ids in human readable format: $params.rename_ec
     Choose whether saving or not the genome index and/or the downloaded reference databases: $params.save_reference
     Version of Nextflow pipeline: $params.version
 """
@@ -219,7 +221,7 @@ workflow {
         
 			ch_versions = ch_versions.mix(HUMANN3_SKIPPING_METAPHLAN.out.versions)
 	
-			HUMANN3_POST_PROCESSING(HUMANN3_SKIPPING_METAPHLAN.out.genefamilies_KO_renamed.collect(), HUMANN3_SKIPPING_METAPHLAN.out.pathabundance.collect())
+			HUMANN3_POST_PROCESSING(HUMANN3_SKIPPING_METAPHLAN.out.genefamilies_KO_renamed.collect(), HUMANN3_SKIPPING_METAPHLAN.out.genefamilies_EC_renamed.collect(), HUMANN3_SKIPPING_METAPHLAN.out.pathabundance.collect())
 
 			ch_versions = ch_versions.mix(HUMANN3_POST_PROCESSING.out.versions)
 	
@@ -241,7 +243,7 @@ workflow {
 
 			ch_versions = ch_versions.mix(HUMANN3_WITH_METAPHLAN.out.versions)
         
-			HUMANN3_POST_PROCESSING(HUMANN3_WITH_METAPHLAN.out.genefamilies_KO_renamed.collect(), HUMANN3_WITH_METAPHLAN.out.pathabundance.collect())
+			HUMANN3_POST_PROCESSING(HUMANN3_WITH_METAPHLAN.out.genefamilies_KO_renamed.collect(), HUMANN3_WITH_METAPHLAN.out.genefamilies_EC_renamed.collect(), HUMANN3_WITH_METAPHLAN.out.pathabundance.collect())
 
 			ch_versions = ch_versions.mix(HUMANN3_POST_PROCESSING.out.versions)
 
