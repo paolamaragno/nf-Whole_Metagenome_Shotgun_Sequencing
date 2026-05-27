@@ -10,7 +10,7 @@ process FASTQC_FILTERED_READS {
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::fastqc=0.12.1'
 	} else {
-		container 'biocontainers/fastqc:0.12.1_hdfd78af_0'
+		container 'biocontainers/fastqc:0.12.1--hdfd78af_0'
 	}
 
 	input:
