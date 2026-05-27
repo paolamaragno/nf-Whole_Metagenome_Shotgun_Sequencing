@@ -18,10 +18,12 @@ process HUMANN3_POST_PROCESSING {
 
 	input:
 	path(genefamilies_KO_renamed)
+	path(genefamilies_EC_renamed)
 	path(pathabundance)
 
 	output:
 	path("all_genefamilies_KO_renamed.tsv")
+	path("all_genefamilies_EC_renamed.tsv")
 	path("all_pathabundance.tsv")
 	path  "versions_humann.yml", emit: versions
 
@@ -33,9 +35,16 @@ process HUMANN3_POST_PROCESSING {
 	mkdir -p all_genefamilies_KO_renamed
 	cp ${genefamilies_KO_renamed} all_genefamilies_KO_renamed
 
+	mkdir -p all_genefamilies_EC_renamed
+        cp ${genefamilies_EC_renamed} all_genefamilies_EC_renamed
+
 	humann_join_tables --input all_pathabundance --output all_pathabundance.tsv --file_name pathabundance
 
 	humann_join_tables --input all_genefamilies_KO_renamed --output all_genefamilies_KO_renamed.tsv --file_name genefamilies_KO_renamed
+
+	humann_join_tables --input all_genefamilies_EC --output all_genefamilies_EC.tsv --file_name genefamilies_EC
+
+	humann_join_tables --input all_genefamilies_EC_renamed --output all_genefamilies_EC_renamed.tsv --file_name genefamilies_EC_renamed
 
 	cat <<-END_VERSIONS > versions_humann.yml
         "${task.process}":
