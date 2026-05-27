@@ -3,14 +3,14 @@
 process FASTQC_FILTERED_READS {
 
 	cpus { 2 + (1 * (task.attempt-1)) }
-	memory { 6.GB + (2.GB * (task.attempt-1))}
+	memory { 8.GB + (2.GB * (task.attempt-1))}
 
 	tag "Fastqc on filtered reads of $name"
 
 	if( params.run_mode == 'conda' ) {
 		conda 'bioconda::fastqc=0.12.1'
 	} else {
-		container 'biocontainers/fastqc:0.12.1--hdfd78af_0'
+		container 'biocontainers/fastqc:0.12.1_hdfd78af_0'
 	}
 
 	input:
@@ -31,4 +31,5 @@ process FASTQC_FILTERED_READS {
 
 	"""
 }
+
 

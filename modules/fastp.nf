@@ -8,7 +8,7 @@ process FASTP {
 	tag "Fastp on $name"
 	publishDir "${params.outdir}/fastp/${name}",
 		mode: 'copy',
-		saveAs: { fn -> if (fn.equals("versions_fastp.yml") || fn.equals("fastp.json")) { return null }
+		saveAs: { fn -> if (fn.equals("versions_fastp.yml") || fn.equals("${name}_fastp.json")) { return null }
 			else { return fn } }
 
 	if( params.run_mode == 'conda' ) {
@@ -22,9 +22,9 @@ process FASTP {
 
 	output:
 	tuple val(name), file("${name}_R1_001_filtered.fastq"), file("${name}_R2_001_filtered.fastq"), emit: fastp_reads
-	file("${name}_fastp.html")
-	file("fastp.json"), emit: json
-	path  "versions_fastp.yml", emit: versions
+	path "${name}_fastp.html", emit: html
+	path "${name}_fastp.json", emit: json
+	path "versions_fastp.yml", emit: versions
 
 	script:
 	"""
@@ -34,6 +34,7 @@ process FASTP {
                 --out1 ${name}_R1_001_filtered.fastq \
                 --out2 ${name}_R2_001_filtered.fastq \
                 --html ${name}_fastp.html \
+                -j ${name}_fastp.json \
                 --cut_front --cut_front_window_size 1 --cut_front_mean_quality 20 \
                 --cut_tail --cut_tail_window_size 1 --cut_tail_mean_quality 20 \
                 --cut_right --cut_right_window_size 4 --cut_right_mean_quality 15 \

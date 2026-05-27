@@ -2,8 +2,8 @@
 
 process FASTQC_RAW_READS {
 
-	cpus { 3 + (2 * (task.attempt - 1))}
-	memory { 6.GB + (2.GB * (task.attempt -1))}
+	cpus { 2 + (2 * (task.attempt - 1))}
+	memory { 8.GB + (2.GB * (task.attempt -1))}
 
 	tag "Fastqc on raw reads of $sample"
 

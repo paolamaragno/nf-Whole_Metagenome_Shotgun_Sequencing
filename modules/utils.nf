@@ -35,18 +35,16 @@ def helpMessage() {
     --metaphlan_db_for_humann	Path to the folder containing Metaphlan database to use if Metaphlan is run into 
 				Humann (default: false, in this case the database will be downloaded by the pipeline)
     --metaphlan_db_index	Desired version for metaphlan database (only "mpa_vJun23_CHOCOPhlAnSGB_202403" or 
-				"mpa_vJan25_CHOCOPhlAnSGB_202503" are possible, default: "mpa_vJan25_CHOCOPhlAnSGB_202503")
+				"mpa_vJan25_CHOCOPhlAnSGB_202503" are possible)
     --skip_humann		Whether to skip functional analysis (default: false)
     --humann_nucleotide_db	Path to the folder containing Humann nucleotide database (default: false, in this case 
 				the database will be downloaded by the pipeline)
     --humann_protein_db		Path to the folder containing Humann protein database (default: false, in this case 
 				the database will be downloaded by the pipeline)
-    --gene_families_db		Specification of the version of Uniref database for gene family definitions 
-				(default: "uniref90")
-    --regroup_option		Specification of the functional category in which regrouping gene families
-				(default: "uniref90_ko")
-    --rename_option		Specification of the feature type in which rename gene families 
-				(default: "kegg-orthology")
+    --regroup_uniref90_to_ko	Specification whether regrouping gene families from UniRef90 to KEGG (default: true)
+    --rename_ko			Specification whether renaming KEGG ids in human readable format (default: true)
+    --regroup_uniref90_to_ec	Specification whether regrouping gene families from UniRef90 to EC (default: true)
+    --rename_ec			Specification whether renaming EC ids in human readable format (default: true)
     --save_reference		Choose whether saving or not the downloaded reference databases (default: true)
 
     """
