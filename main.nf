@@ -130,7 +130,7 @@ workflow {
 
 		ch_metaphlan_db = Channel.value(params.metaphlan_db_vJun23)
 
-	} else if (params.metaphlan_db_index == 'mpa_vJan25_CHOCOPhlAnSGB_202503" && params.metaphlan_db_vJan25) {
+	} else if (params.metaphlan_db_index == 'mpa_vJan25_CHOCOPhlAnSGB_202503' && params.metaphlan_db_vJan25) {
 
 		ch_metaphlan_db = Channel.value(params.metaphlan_db_vJan25)
 
