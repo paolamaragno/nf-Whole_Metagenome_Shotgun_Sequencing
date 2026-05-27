@@ -40,7 +40,7 @@ process HUMANN3_WITH_METAPHLAN {
 		"""
 		humann_config --update database_folders utility_mapping ${humann_utility_mapping}
 
-		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234" --diamond-options "--block-size 0.5 --index-chunks 6  --top 1" \
+		humann -i ${processed_fastq} --output . --search-mode uniref90 --threads ${task.cpus} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234" --diamond-options "--block-size 0.5 --index-chunks 6  --top 1" \
 				--metaphlan-options "--index mpa_vJun23_CHOCOPhlAnSGB_202403 --bowtie2db ${metaphlan_db} --read_min_len 100 "
 
 		${run_regroup_uniref_ko}
@@ -62,7 +62,7 @@ process HUMANN3_WITH_METAPHLAN {
                 """
         } else {
 		"""
-		humann -i ${processed_fastq} --output . --search-mode ${params.gene_families_db} --threads ${task.cpus} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234" --diamond-options "--block-size 0.5 --index-chunks 6 --top 1" \
+		humann -i ${processed_fastq} --output . --search-mode uniref90 --threads ${task.cpus} --protein-database ${humann_db_proteins} --nucleotide-database ${humann_db_nucleo} --bowtie-options "--very-sensitive --seed 1234" --diamond-options "--block-size 0.5 --index-chunks 6 --top 1" \
 				--metaphlan-options "--index mpa_vJun23_CHOCOPhlAnSGB_202403 --bowtie2db ${metaphlan_db} --read_min_len 100"
 
 		${run_regroup_uniref_ko}
