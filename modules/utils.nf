@@ -30,12 +30,12 @@ def helpMessage() {
     --genome_index		Path to the folder containing the index of the genome (default: false, in this case 
 				the indexing of the genome will be done by the pipeline)
     --idx_genome		Name to use for the the index of the genome
-    --metaphlan_db		Path to the folder containing Metaphlan database (default: false, in this case the 
-				database will be downloaded by the pipeline)
-    --metaphlan_db_for_humann	Path to the folder containing Metaphlan database to use if Metaphlan is run into 
-				Humann (default: false, in this case the database will be downloaded by the pipeline)
     --metaphlan_db_index	Desired version for metaphlan database (only "mpa_vJun23_CHOCOPhlAnSGB_202403" or 
 				"mpa_vJan25_CHOCOPhlAnSGB_202503" are possible)
+    --metaphlan_db_vJun23	Path to the folder containing Metaphlan database vJun23 (default: false, in this case 
+				the database will be downloaded by the pipeline)
+    --metaphlan_db_vJan25	Path to the folder containing Metaphlan database vJan25 (default: false, in this case 
+				the database will be downloaded by the pipelin, if needed)
     --skip_humann		Whether to skip functional analysis (default: false)
     --humann_nucleotide_db	Path to the folder containing Humann nucleotide database (default: false, in this case 
 				the database will be downloaded by the pipeline)
