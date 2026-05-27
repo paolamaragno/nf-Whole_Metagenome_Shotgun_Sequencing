@@ -11,13 +11,12 @@ log_text = """
     Path to the genome fasta file: $params.genome_fasta
     Path to the folder containing the index of the genome: $params.genome_index
     Name to use for the the index of the genome: $params.idx_genome
-    Path to the folder containing Metaphlan database: $params.metaphlan_db
-    Path to the folder containing Metaphlan database (if Metaphlan is run inside Humann): $params.metaphlan_db_for_humann
     Desired version for Metaphlan database: $params.metaphlan_db_index
+    Path to the folder containing Metaphlan database vJun23: $params.metaphlan_db_vJun23
+    Path to the folder containing Metaphlan database vJan25: $params.metaphlan_db_vJan25
     Whether to skip functional analysis: $params.skip_humann   
     Path to the folder containing Humann nucleotide database: $params.humann_nucleotide_db
     Path to the folder containing Humann protein database: $params.humann_protein_db
-    Specification of the version of Uniref database for gene family definitions: $params.gene_families_db
     Specification whether regrouping gene families from UniRef90 to KEGG: $params.regroup_uniref90_to_ko
     Specification whether renaming KEGG ids in human readable format: $params.rename_ko
     Specification whether regrouping gene families from UniRef90 to EC: ${params.regroup_uniref90_to_ec}
@@ -127,16 +126,20 @@ workflow {
 	ch_versions = ch_versions.mix(FASTP_COLLECT.out.versions)
 
 	// metaphlan database
-	if (params.metaphlan_db) {
+	if (params.metaphlan_db_index == 'mpa_vJun23_CHOCOPhlAnSGB_202403' && params.metaphlan_db_vJun23) {
 
-		ch_metaphlan_db = Channel.value(params.metaphlan_db)
+		ch_metaphlan_db = Channel.value(params.metaphlan_db_vJun23)
+
+	} else if (params.metaphlan_db_index == 'mpa_vJan25_CHOCOPhlAnSGB_202503" && params.metaphlan_db_vJan25) {
+
+		ch_metaphlan_db = Channel.value(params.metaphlan_db_vJan25)
 
 	} else {
 
 		ch_metaphlan_db = METAPHLAN_INSTALL().metaphlan_db
 		ch_versions = ch_versions.mix(METAPHLAN_INSTALL.out.versions) 
 
-	}
+	} 
 	
 	// indexing of host genome
 	if (params.genome_index) {
@@ -228,9 +231,9 @@ workflow {
 		} else {
 
 			// install metaphlan database vJun23
-			if (params.metaphlan_db_for_humann) {
+			if (params.metaphlan_db_vJun23) {
 
-				ch_metaphlan_db_for_humann = Channel.value(params.metaphlan_db_for_humann)
+				ch_metaphlan_db_for_humann = Channel.value(params.metaphlan_db_vJun23)
 
 			} else {
 
