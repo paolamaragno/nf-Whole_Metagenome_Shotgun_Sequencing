@@ -61,6 +61,7 @@ nextflow run main.nf --help
     --regroup_uniref90_to_ko    Specification whether regrouping gene families from UniRef90 to KEGG (default: true)
     --rename_ko                 Specification whether renaming KEGG ids in human readable format (default: true)
     --regroup_uniref90_to_ec    Specification whether regrouping gene families from UniRef90 to EC (default: true)
+    --rename_ec				    Specification whether renaming EC ids in human readable format (default: true)
     --save_reference			Choose whether saving or not the downloaded reference databases (default: true)
 ```
 
