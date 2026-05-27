@@ -49,11 +49,10 @@ nextflow run main.nf --help
     --idx_genome				Name to use for the the index of the genome
     --metaphlan_db_index		Desired version for metaphlan database (possibile values: "mpa_vJun23_CHOCOPhlAnSGB_202403"
 								or "mpa_vJan25_CHOCOPhlAnSGB_202503", default: "mpa_vJan25_CHOCOPhlAnSGB_202503")
-	--metaphlan_db				Path to the folder containing Metaphlan database (default: false, in this case the 
+	--metaphlan_db_vJun23		Path to the folder containing Metaphlan database vJun23 (default: false, in this case the 
 								database will be downloaded by the pipeline)
-	--metaphlan_db_for_humann	Path to the folder containing Metaphlan database to use if Metaphlan is run into Humann (default:
-								false, in this case the database will be downloaded by the pipeline). If metaphlan_db_index =
-								"mpa_vJun23_CHOCOPhlAnSGB_202403", metaphlan_db_for_humann should be equal to metaphlan_db
+	--metaphlan_db_vJan25		Path to the folder containing Metaphlan database vJan25 (default: false, in this case the database will be
+								downloaded by the pipeline, if needed). 
 	--skip_humann				Whether to skip functional analysis (default: false)
     --humann_nucleotide_db		Path to the folder containing Humann nucleotide database (default: false, in this case 
 								the database will be downloaded by the pipeline)
