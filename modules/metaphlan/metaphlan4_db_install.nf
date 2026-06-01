@@ -2,8 +2,8 @@
 
 process METAPHLAN_INSTALL {
 
-	cpus { 6 + (2 * (task.attempt -1 )) }
-	memory { 6.GB + (2.GB * (task.attempt -1))}
+	cpus { 8 + (2 * (task.attempt -1 )) }
+	memory { 8.GB + (2.GB * (task.attempt -1))}
 
 	if( params.run_mode == 'conda' ) {
 		conda 'metaphlan=4.2.4'
