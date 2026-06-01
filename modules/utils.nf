@@ -57,7 +57,7 @@ process write_log {
                 mode: 'copy'
         ]
    
-    cpus = { 1 }
+    cpus = { 2 }
     memory { 1.GB }
 
     input:
