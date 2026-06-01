@@ -42,8 +42,6 @@ process HUMANN3_POST_PROCESSING {
 
 	humann_join_tables --input all_genefamilies_KO_renamed --output all_genefamilies_KO_renamed.tsv --file_name genefamilies_KO_renamed
 
-	humann_join_tables --input all_genefamilies_EC --output all_genefamilies_EC.tsv --file_name genefamilies_EC
-
 	humann_join_tables --input all_genefamilies_EC_renamed --output all_genefamilies_EC_renamed.tsv --file_name genefamilies_EC_renamed
 
 	cat <<-END_VERSIONS > versions_humann.yml
