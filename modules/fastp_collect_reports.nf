@@ -2,8 +2,8 @@
 
 process FASTP_COLLECT {
 
-	cpus { 1 + (2 * (task.attempt-1)) }
-	memory { 2.GB + (2.GB * (task.attempt -1)) }
+	cpus { 3 + (2 * (task.attempt-1)) }
+	memory { 9.GB + (2.GB * (task.attempt -1)) }
 
 	publishDir "${params.outdir}/fastp/",
 		mode: 'copy',
