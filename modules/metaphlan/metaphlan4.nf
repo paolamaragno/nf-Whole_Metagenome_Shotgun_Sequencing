@@ -2,8 +2,9 @@
 
 process METAPHLAN4 {
 
-	cpus { 15 + (2 * (task.attempt -1 )) }
-	memory { 60.GB + (5.GB * (task.attempt -1 )) }
+	cpus { 40 + (2 * (task.attempt -1 )) }
+	memory { 45.GB + (5.GB * (task.attempt -1 )) }
+	time { 24.h * task.attempt }
 
 	tag "Metaphlan4 on $sample_id"
 	publishDir "${params.outdir}/metaphlan/${sample_id}",
