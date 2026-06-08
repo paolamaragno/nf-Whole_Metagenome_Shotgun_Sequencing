@@ -2,8 +2,8 @@
 
 process METAPHLAN4_MERGE_PROFILES {
 
-	cpus { 2 + (2 * (task.attempt - 1)) }
-	memory { 2.GB + (2.GB* (task.attempt -1 ))}
+	cpus { 3 + (2 * (task.attempt - 1)) }
+	memory { 10.GB + (2.GB* (task.attempt -1 ))}
 
 	publishDir "${params.outdir}/metaphlan/",
 		mode: 'copy',
