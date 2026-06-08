@@ -2,8 +2,9 @@
 
 process FASTP {
 
-	cpus { 5 + (2 * (task.attempt-1)) }
-	memory { 7.GB + (2.GB * (task.attempt -1)) }
+	cpus { 12 + (2 * (task.attempt-1)) }
+	memory { 10.GB + (2.GB * (task.attempt -1)) }
+	time { 12.h * task.attempt }
 
 	tag "Fastp on $name"
 	publishDir "${params.outdir}/fastp/${name}",
