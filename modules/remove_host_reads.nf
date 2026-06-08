@@ -2,8 +2,9 @@
 
 process REMOVE_HOST_READS {
 
-	cpus { 10 + (2 * (task.attempt - 1)) }
-	memory { 30.GB + (5.GB * (task.attempt - 1)) }
+	cpus { 24 + (2 * (task.attempt - 1)) }
+	memory { 15.GB + (5.GB * (task.attempt - 1)) }
+	time { 24.h * task.attempt }
 
 	tag "Host reads removal from  $sample_id"
 	publishDir  "${params.outdir}/processed_reads/${sample_id}",
