@@ -2,8 +2,8 @@
 
 process HUMANN3_POST_PROCESSING {
 
-	cpus { 1 + (2 * (task.attempt - 1)) }
-	memory { 5.GB + (2.GB * (task.attempt - 1))}
+	cpus { 3 + (2 * (task.attempt - 1)) }
+	memory { 10.GB + (2.GB * (task.attempt - 1))}
 
 	publishDir "${params.outdir}/humann3.9",
 		mode: 'copy',
