@@ -2,9 +2,9 @@
 
 process HUMANN3_SKIPPING_METAPHLAN {
 
-	cpus { 10 + (2 * (task.attempt -1)) }
-	memory { 100.GB + (10.GB * (task.attempt -1)) }
-	time '48h'
+	cpus { 15 + (2 * (task.attempt -1)) }
+	memory { 30.GB + (10.GB * (task.attempt -1)) }
+	time { 24.h * task.attempt }
 
 	tag "Humann3 on $sample_id"
 
