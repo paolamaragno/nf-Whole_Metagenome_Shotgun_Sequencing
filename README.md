@@ -86,12 +86,14 @@ Humann tool in this pipeline works with the last versions of Chocophlan and UniR
 respecitively.
 
 This is the overview of the pipeline when Metaphlan database mpa_vJan25_CHOCOPhlAnSGB_202503 is used:
-<img width="6088" height="4972" alt="flowchart_vJan25_metaphlan_db" src="https://github.com/user-attachments/assets/85e84c51-ae3f-46b7-8a95-858a3f24444e" />
+<img width="6088" height="5012" alt="flowchart_vJan25_metaphlan_db" src="https://github.com/user-attachments/assets/6702439d-b334-4a0b-9a97-5b17a871b345" />
+
 
 
 
 This is the overview of the pipeline when Metaphlan database mpa_vJun23_CHOCOPhlAnSGB_202403 is used:
-<img width="6088" height="5008" alt="flowchar_vJun23_metaphlan_db" src="https://github.com/user-attachments/assets/bed86916-ba65-465d-af23-3babc88cf828" />
+<img width="6088" height="5052" alt="flowchar_vJun23_metaphlan_db" src="https://github.com/user-attachments/assets/fe35b8f1-6566-4e09-9bda-0dbeccaf688c" />
+
 
 
 
